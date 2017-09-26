@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.associations": {
+        "errno.h": "c",
+        "string.h": "c"
+    },
+    "git.enabled": false, //stops the git popup in vscode for this project
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4 }" //autoformat override settings for plugin 'ms-vscode.cpptools'
+}
