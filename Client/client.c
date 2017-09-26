@@ -9,12 +9,7 @@
 #include <unistd.h>
 #include <windows.h>
 
-#define MAXDATASIZE 100 /* max number of bytes we can get at once */
-
-#define STRING_SIZE 7
-// #define ARRAY_SIZE 30
-
-#define RETURNED_ERROR -1
+#include "lib/_global.h"
 
 void PlayHangman(char *word) {
     int guesses = min(strlen(word) + strlen(word) + 10, 26);

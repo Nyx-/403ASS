@@ -9,11 +9,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define ARRAY_SIZE 30
-
-#define BACKLOG 10 /* how many pending connections queue will hold */
-
-#define RETURNED_ERROR -1
+#include "lib/_global.h"
 
 void Testing_Function(int socket_id) {
     char* testStr = "testing";
