@@ -49,12 +49,6 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* generate the socket */
-    if ((sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-        perror("socket");
-        exit(1);
-    }
-
     /* Generate socket */
     // The function creates a socket with AF_INET ( IP Addressing ) and of type
     // SOCK_STREAM. Data from all devices wishing to connect on this socket will
