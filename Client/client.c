@@ -5,63 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
-#include <windows.h>
 
 #include "lib/_global.h"
-
-void PlayHangman(char *word) {
-    int guesses = min(strlen(word) + strlen(word) + 10, 26);
-    char *guessedLetters = malloc(guesses);
-    char *currentWord = malloc(strlen(word));
-
-    printf("Guessed letters: \n\n");
-    printf("Number of guesses left: %d\n\n", guesses);
-
-    int i = 0;
-    // print the word
-    for (i = 0; i < strlen(word); i++) {
-        currentWord[i] = '_';
-        printf("%c ", currentWord[i]);
-    }
-    printf("\n\nEnter your guess - ");
-
-    // while there are still guesses available
-    char c;
-    while (1) {
-        scanf("%c", &c);
-        if (c != '\n') {
-            if (isalpha(c)) {
-                printf("TESTING\n");
-            }
-        }
-    }
-}
-
-void Receive_Array_Int_Data(int socket_identifier, int size) {
-    int number_of_bytes, i = 0;
-    uint8_t statistics;
-    char finalOutput[MAXDATASIZE] = "";
-
-    char *results = malloc(sizeof(char) * STRING_SIZE);
-
-    for (i = 0; i < size; i++) {
-        if ((number_of_bytes = recv(socket_identifier, &statistics,
-                                    sizeof(uint8_t), 0)) == RETURNED_ERROR) {
-            perror("recv");
-            exit(EXIT_FAILURE);
-        }
-        results[i] = statistics;
-    }
-    for (i = 0; i < STRING_SIZE; i++) {
-        // THIS JOINS THE STRING TOGETHER
-        strncat(finalOutput, &results[i], 1);
-    }
-
-    printf("%s\n", finalOutput);
-    PlayHangman(finalOutput);
-}
+#include "lib/controller.h"
 
 int main(int argc, char *argv[]) {
     int sock_fd, numbytes, i = 0;
