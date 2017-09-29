@@ -12,7 +12,8 @@ typedef struct Hangman {
 
 Hangman *createGame(char *word);
 void PlayHangman();
-char GetGuess();
+char getGuess();
+void display();
 
 Hangman *new_game;
 
