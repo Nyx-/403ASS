@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "connection.h"
+#include "hangman.h"
 
 void Receive_Array_Int_Data(int socket_identifier, int size) {
     int number_of_bytes, i = 0;
@@ -27,5 +28,6 @@ void Receive_Array_Int_Data(int socket_identifier, int size) {
     }
 
     printf("%s\n", finalOutput);
-    PlayHangman(finalOutput);
+    new_game = createGame(finalOutput);
+    PlayHangman();
 }
