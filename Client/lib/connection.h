@@ -3,6 +3,17 @@
 
 #include "_global.h"
 
+typedef struct Connection {
+    char *ip_address;
+    int port;
+    int socket;
+    pthread_t thread;
+} Connection;
+
+Connection newConnection(char *ip, int *port);
+int initialiseConnection();
+void closeConnection();
+
 void Receive_Array_Int_Data(int socket_identifier, int size);
 
 // void initialise();
