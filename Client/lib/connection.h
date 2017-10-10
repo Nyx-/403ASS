@@ -2,15 +2,16 @@
 #define CONNECTION_H
 
 #include "_global.h"
+#include <pthread.h>
 
 typedef struct Connection {
-    char *ip_address;
+    char *ip;
     int port;
     int socket;
     pthread_t thread;
 } Connection;
 
-Connection newConnection(char *ip, int *port);
+Connection *newConnection(char *ip, int *port);
 int initialiseConnection();
 void closeConnection();
 

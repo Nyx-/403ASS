@@ -15,4 +15,8 @@ typedef struct Controller {
     Leaderboard *leaderboard;
 } Controller;
 
+Controller *createController(char *argv[]);
+
+Controller *controller;
+
 #endif  // CONTROLLER_H
