@@ -32,9 +32,7 @@ void Receive_Array_Int_Data(int socket_identifier, int size) {
 }
 
 void login() {
-    printf("====================================================\n\n\n
-            Welcome to the Online Hangman Gaming System\n\n\n
-            ====================================================\n\n\n");
+    printf("====================================================\n\n\n Welcome to the Online Hangman Gaming System\n\n\n====================================================\n\n\n");
     
     char user[50];
     char pass[50];
@@ -45,6 +43,6 @@ void login() {
     printf("Please enter your password--> ");
     scanf("%s", pass);
 
-    new_game = createGame(finalOutput);
+    // new_game = createGame(finalOutput);
     PlayHangman();
 }
