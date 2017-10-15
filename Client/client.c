@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Usage: client_ip port_number\n");
         exit(1);
     } else {
-        controller = createController(argv);
+        controller = createController(argv[1], argv[2]);
         if (controller->connection != NULL) {
             fprintf(stderr, "hey you made it, this must mean connection is established\n");
             //initialise controller->connection->thread
