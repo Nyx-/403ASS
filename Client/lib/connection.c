@@ -6,56 +6,54 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <pthread.h>
+#include <netdb.h>
 
 #include "connection.h"
 
 Connection *newConnection(char *ip, int *port) {
-    if (port == 0) {
-        perror("[newConnection] Invalid Port\n");
-        return NULL;
-    }
-    printf("Port valid\n");
-
+    int connectfd;
     struct hostent *he;
-    if (he = gethostbyname(ip) == NULL) {
-        herror("[newConnection] Invalid host IP\n");
-        return NULL;
-    }
-    printf("Host IP valid\n");
+    struct sockaddr_in server;
+    memset (&server, 0, sizeof(server));
 
     Connection *c = malloc(sizeof(Connection));
     c->ip = ip;
     c->port = atoi(port);
-    //Create socket
-    c->socket = socket(AF_INET , SOCK_STREAM , 0);
 
-    //validate socket connection
-    if (c->socket == -1) {
+    if (port == 0) {
+        perror("[newConnection] Invalid Port\n");
+        return NULL;
+    }
+printf("Port valid\n");
+
+    if (he = gethostbyname(ip) == NULL) {
+        herror("[newConnection] Invalid host IP\n");
+        return NULL;
+    }
+printf("Host IP valid\n");
+
+    //create and validate socket connection
+    if ((c->socket = socket(AF_INET , SOCK_STREAM , 0)) == -1) {
         perror("[newConnection] Could not create socket\n");
         return NULL;
     }
     printf("Socket created\n");
     printf("Connection object filled\n");
     
-    struct sockaddr_in server;
     server.sin_family = AF_INET;
     server.sin_port = htons(c->port);
     server.sin_addr.s_addr = inet_addr(c->ip); // OR server.sin_addr = *((struct in_addr *)he->h_addr);
-    bzero(&(server.sin_zero), 8); /* zero the rest of the struct */
 
 //DEBUGGING
 printf("socket value: %d\n", c->socket);
 printf("Server address: %d\n", (struct sockaddr *)&server);
 printf("Server size: %d\n", sizeof(server));
-    
-    int connectfd = connect(c->socket, (struct sockaddr *)&server, sizeof(server));
 
 //DEBUGGING
 printf("Connection fd value: %d\n", connectfd);
 
-    //Connect to remote server
-    // if (connect(c->socket, (struct sockaddr *)&server, sizeof(server)) < 0) {
-    if (connectfd == -1) {
+    //Connect and validate connection to remote server
+    if (connectfd = connect(c->socket, (struct sockaddr *)&server, sizeof(server)) == -1) {
         perror("[newConnection] Connection to server failed\n");
         return NULL;
     }
