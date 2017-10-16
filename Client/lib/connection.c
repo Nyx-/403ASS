@@ -9,8 +9,9 @@
 #include <netdb.h>
 
 #include "connection.h"
+#include "hangman.h"
 
-Connection *newConnection(char *ip, int *port) {
+Connection *newConnection(char *ip, char *port) {
     int connectfd;
     struct hostent *he;
     struct sockaddr_in server;
@@ -22,27 +23,28 @@ Connection *newConnection(char *ip, int *port) {
 
     if (port == 0) {
         perror("[newConnection] Invalid Port\n");
-        return NULL;
+        exit(1);
     }
 printf("Port valid\n");
 
-    if (he = gethostbyname(ip) == NULL) {
+    if ((he = gethostbyname(c->ip)) == NULL) {
         herror("[newConnection] Invalid host IP\n");
-        return NULL;
+        exit(1);
     }
 printf("Host IP valid\n");
 
     //create and validate socket connection
     if ((c->socket = socket(AF_INET , SOCK_STREAM , 0)) == -1) {
         perror("[newConnection] Could not create socket\n");
-        return NULL;
+        exit(1);
     }
     printf("Socket created\n");
     printf("Connection object filled\n");
     
     server.sin_family = AF_INET;
     server.sin_port = htons(c->port);
-    server.sin_addr.s_addr = inet_addr(c->ip); // OR server.sin_addr = *((struct in_addr *)he->h_addr);
+    server.sin_addr = *((struct in_addr *)he->h_addr); // OR server.sin_addr = *((struct in_addr *)he->h_addr);
+    bzero(&(server.sin_zero), 8);
 
 //DEBUGGING
 printf("socket value: %d\n", c->socket);
@@ -53,9 +55,10 @@ printf("Server size: %d\n", sizeof(server));
 printf("Connection fd value: %d\n", connectfd);
 
     //Connect and validate connection to remote server
-    if (connectfd = connect(c->socket, (struct sockaddr *)&server, sizeof(server)) == -1) {
+    if (connect(c->socket, (struct sockaddr *)&server, 
+                            sizeof(struct sockaddr)) == -1) {
         perror("[newConnection] Connection to server failed\n");
-        return NULL;
+        exit(1);
     }
 
     return c;
