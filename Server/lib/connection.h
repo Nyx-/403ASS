@@ -3,7 +3,14 @@
 
 #include "_global.h"
 
-void Testing_Function(int socket_id);
+typedef struct Connection {
+    char *ip;
+    short unsigned int port;
+    int socket;
+} Connection;
+
+Connection *newConnection(char *port);
+void receiveData(int socket_id);
 
 // void initialise();
 // void listen();

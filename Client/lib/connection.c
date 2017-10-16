@@ -10,6 +10,7 @@
 
 #include "connection.h"
 #include "hangman.h"
+#include "menu.h"
 
 Connection *newConnection(char *ip, char *port) {
     int connectfd;
@@ -85,5 +86,6 @@ void Receive_Array_Int_Data(int socket_identifier, int size) {
     }
 
     printf("%s\n", finalOutput);
-    PlayHangman(finalOutput);
+    login();
+    // PlayHangman(finalOutput);
 }
