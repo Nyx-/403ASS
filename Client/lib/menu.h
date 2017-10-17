@@ -3,6 +3,8 @@
 
 void login(); 
 void displayGameMenu();
+void displayGameTitle();
+void displayGameOptions();
 void makeSelection(); 
 
 #endif  // MENU_H

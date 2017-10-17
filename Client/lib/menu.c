@@ -5,6 +5,7 @@
 
 #include "leaderboard.h"
 #include "controller.h"
+#include "menu.h"
 
 void login() {
     char user[50]; 
@@ -25,9 +26,17 @@ void login() {
 }
 
 void displayGameMenu() {
+    displayGameTitle();
+    displayGameOptions();
+}
+
+void displayGameTitle() {
     printf("\n====================================================\n\n\n"
-            "Welcome to the Hangman Gaming System\n\n\n\n"
-            "Please enter a selection\n"
+            "Welcome to the Hangman Gaming System\n\n\n\n");
+}
+
+void displayGameOptions() {
+    printf("Please enter a selection\n"
             "<1> Play Hangman\n"
             "<2> Show Leaderboard\n"
             "<3> Quit\n\n");
@@ -42,6 +51,7 @@ void makeSelection() {
     if (strcmp(option, "1") == 0) {
         //PLAY HANGMAN
         printf("Play hangman\n");
+
     } else if (strcmp(option, "2") == 0) {
         //SHOW LEADERBOARD
         printf("Show leaderboard\n");

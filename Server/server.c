@@ -13,6 +13,7 @@
 #include "lib/controller.h"
 #include "lib/connection.h"
 #include "lib/authentication.h"
+#include "lib/hangman.h"
 
 int main(int argc, char* argv[]) {
     /* Thread attributes here */
@@ -32,6 +33,9 @@ int main(int argc, char* argv[]) {
     }
     if (controller->connection != NULL) {
         fprintf(stderr, "Something happened correctly woo!\n");
+
+        loadWords();
+        gameSetup();
 
         /* Main accept() loop */
         while (LOOP) {
