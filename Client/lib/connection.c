@@ -89,3 +89,9 @@ void Receive_Array_Int_Data(int socket_identifier, int size) {
     login();
     // PlayHangman(finalOutput);
 }
+
+void invalidConnection() {
+    printf("You entered either an incorrect username or password - disconnecting\n");
+    char* send[MAXDATASIZE];
+    exit(1);
+}

@@ -10,7 +10,7 @@ typedef struct User {
 } User;
 
 void authenticateUser(int new_fd);
-int checkAuth(char* name, char* pass);
+char* checkAuth(char* name, char* pass);
 // char* strToLower(char* string);
 
 #endif  // AUTHENTICATION_H

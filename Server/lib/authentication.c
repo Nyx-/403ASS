@@ -7,10 +7,14 @@
 #include "authentication.h"
 
 void authenticateUser(int new_fd) {
-    char* userReceived[MAXDATASIZE], passReceived[MAXDATASIZE], send[MAXDATASIZE];
+    char* userReceived[MAXDATASIZE], passReceived[MAXDATASIZE], sendData[MAXDATASIZE];
     char* password;
     User *u = malloc(sizeof(User));
 
+    char* cor = "correct";
+    char* inc = "incorrect";
+    
+    memset(sendData, 0, sizeof(sendData));
     memset(userReceived, 0, sizeof(userReceived));
     memset(passReceived, 0, sizeof(passReceived));
 
@@ -30,29 +34,27 @@ void authenticateUser(int new_fd) {
 
     printf("Password received: %s\n", password);
 
-    printf("before it all goes poop");
-
-    checkAuth(u->name, password);
-
-    printf("check");
-
     // if(checkAuth(u->name, password)) {
-    //     printf("Correct login");
-    //     //correct login
+    //     printf("Correct login\n");
+    //     strcpy(sendData, cor);
     // } else {
-    //     printf("Incorrect login");
-    //     //send wrong login message
+    //     printf("Incorrect login\n");
+    //     strcpy(sendData, inc);
     // }
+
+    strcpy(sendData, checkAuth(u->name, password));
+
+    printf("send data: %s\n", sendData);
+
+    send(new_fd, sendData, strlen(sendData), 0);
 }
 
-int checkAuth(char* name, char* pass) {
-    printf("into checkauth function");
+char* checkAuth(char* name, char* pass) {
     FILE *file = fopen("Authentication.txt", "r");
     if (file == NULL) {
         perror("Unable to read Auth file");
         exit(1);
     }
-    printf("file opened");
 
     char buffer[150];
     char* fileU = malloc(strlen(name) * sizeof(char));
@@ -60,15 +62,15 @@ int checkAuth(char* name, char* pass) {
 
     while(fgets(buffer, sizeof(buffer), file) != NULL) {
         sscanf(buffer, "%s %s", fileU, fileP);
-        printf("File username %s and password %s", fileU, fileP);
+        //printf("File username %s and password %s\n", fileU, fileP);
         if(strcmp(name, fileU) == 0 && strcmp(pass, fileP) == 0) {
-            return 1;
+            return "correct";
         }
     }
 
     fclose(file);
 
-    return 0;
+    return "incorrect";
 }
 
 // char* strToLower(char* string) {

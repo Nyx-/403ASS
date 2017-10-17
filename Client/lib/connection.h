@@ -16,6 +16,7 @@ int initialiseConnection();
 void closeConnection();
 
 void Receive_Array_Int_Data(int socket_identifier, int size);
+void invalidConnection();
 
 // void initialise();
 // void login();

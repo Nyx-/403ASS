@@ -20,8 +20,4 @@ void login() {
     printf("Please enter your password--> "); 
     scanf("%s", pass);
     send(controller->connection->socket, pass, sizeof(pass), 0);
-
-    while(1) {
-        
-    }
 }

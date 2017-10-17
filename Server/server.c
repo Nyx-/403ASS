@@ -52,10 +52,11 @@ int main(int argc, char* argv[]) {
 
             pthread_join(client_thread, NULL);
 
-            if (send(new_fd, "All of array data sent by server\n", 40, 0) == RETURNED_ERROR) {
-                perror("send");
-            }
+            // if (send(new_fd, "All of array data sent by server\n", 40, 0) == RETURNED_ERROR) {
+            //     perror("send");
+            // }
         }
+        printf("Thread %d has disconnected\n", new_fd);
         close(new_fd);
     }
 
