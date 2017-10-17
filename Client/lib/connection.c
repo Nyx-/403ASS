@@ -35,7 +35,7 @@ printf("Port valid\n");
 printf("Host IP valid\n");
 
     //create and validate socket connection
-    if ((c->socket = socket(AF_INET , SOCK_STREAM , 0)) == -1) {
+    if ((c->socket = socket(AF_INET , SOCK_STREAM , 0)) == RETURNED_ERROR) {
         perror("[newConnection] Could not create socket\n");
         exit(1);
     }

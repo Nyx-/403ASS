@@ -12,12 +12,14 @@
 #include "lib/_global.h"
 #include "lib/controller.h"
 #include "lib/connection.h"
+#include "lib/authentication.h"
 
 int main(int argc, char* argv[]) {
     /* Thread attributes here */
     pthread_t client_thread;
     pthread_attr_t attr;
 
+    char* defaultPort = "12345";
     int new_fd; /* listen on sock_fd, new connection on new_fd */
     struct sockaddr_in client_addr; /* Client address info */
     socklen_t sin_size;
@@ -25,37 +27,36 @@ int main(int argc, char* argv[]) {
 
     /* Get port number for server to listen on */
     if (argc != 2) {
-        fprintf(stderr, "usage: client port_number\n");
-        exit(1);
+        controller = createController(defaultPort);
     } else {
         controller = createController(argv[1]);
-        if (controller->connection != NULL) {
-            fprintf(stderr, "Something happened correctly woo!\n");
+    }
+    if (controller->connection != NULL) {
+        fprintf(stderr, "Something happened correctly woo!\n");
 
-            /* Main accept() loop */
-            while (1) {
-                sin_size = sizeof(struct sockaddr_in);
-                if ((new_fd = accept(controller->connection->socket, (struct sockaddr*)&client_addr,
-                                    &sin_size)) == -1) {
-                    perror("accept");
-                    continue;
-                }
-                printf("server: got connection from %s\n",
-                    inet_ntoa(client_addr.sin_addr));
-
-                /* Create a thread to accept client */
-                pthread_attr_t attr;
-                pthread_attr_init(&attr);
-                pthread_create(&client_thread, &attr, receiveData, new_fd);
-
-                pthread_join(client_thread, NULL);
-
-                if (send(new_fd, "All of array data sent by server\n", 40, 0) == -1) {
-                    perror("send");
-                }
+        /* Main accept() loop */
+        while (LOOP) {
+            sin_size = sizeof(struct sockaddr_in);
+            if ((new_fd = accept(controller->connection->socket, (struct sockaddr*)&client_addr,
+                                &sin_size)) == RETURNED_ERROR) {
+                perror("accept");
+                continue;
             }
-            close(new_fd);
+            printf("server: got connection from %s\n",
+                inet_ntoa(client_addr.sin_addr));
+
+            /* Create a thread to accept client */
+            pthread_attr_t attr;
+            pthread_attr_init(&attr);
+            pthread_create(&client_thread, &attr, authenticateUser, new_fd);
+
+            pthread_join(client_thread, NULL);
+
+            if (send(new_fd, "All of array data sent by server\n", 40, 0) == RETURNED_ERROR) {
+                perror("send");
+            }
         }
+        close(new_fd);
     }
 
     
