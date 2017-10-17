@@ -6,6 +6,7 @@
 #define RETURNED_ERROR -1
 #define MAXDATASIZE 1024
 #define LOOP 1
+#define DEFAULT_PORT "12345"
 
 // structs?
 

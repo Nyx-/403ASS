@@ -34,18 +34,7 @@ void authenticateUser(int new_fd) {
 
     printf("Password received: %s\n", password);
 
-    // if(checkAuth(u->name, password)) {
-    //     printf("Correct login\n");
-    //     strcpy(sendData, cor);
-    // } else {
-    //     printf("Incorrect login\n");
-    //     strcpy(sendData, inc);
-    // }
-
     strcpy(sendData, checkAuth(u->name, password));
-
-    printf("send data: %s\n", sendData);
-
     send(new_fd, sendData, strlen(sendData), 0);
 }
 

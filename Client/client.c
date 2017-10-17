@@ -16,14 +16,13 @@ int main(int argc, char *argv[]) {
         // fprintf(stderr, "Incorrect parameters\n");
         // fprintf(stderr, "Usage: client_ip port_number\n");
         // exit(1);
-        controller = createController(argv[1], "12345");
+        controller = createController(argv[1], DEFAULT_PORT);
     } else {
         controller = createController(argv[1], argv[2]);
     }
     if (controller->connection != NULL) {
-        fprintf(stderr, "hey you made it, this must mean connection is established\n");
         //initialise controller->connection->thread
-            //in the initialise thingo, check for if it fails to start the thread, and throw error.
+        //in the initialise thingo, check for if it fails to start the thread, and throw error.
         //game initialise
 
         /* Receive data from server */
@@ -45,7 +44,8 @@ int main(int argc, char *argv[]) {
 
         if (strcmp(loginAuth, "correct") == 0) {
             //show main game menu
-            printf("GAME MENU\n");
+            displayGameMenu();
+            makeSelection();
             while(1);
         } else if (strcmp(loginAuth, "incorrect") == 0) {
             //show exit game message

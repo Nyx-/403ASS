@@ -19,7 +19,6 @@ int main(int argc, char* argv[]) {
     pthread_t client_thread;
     pthread_attr_t attr;
 
-    char* defaultPort = "12345";
     int new_fd; /* listen on sock_fd, new connection on new_fd */
     struct sockaddr_in client_addr; /* Client address info */
     socklen_t sin_size;
@@ -27,7 +26,7 @@ int main(int argc, char* argv[]) {
 
     /* Get port number for server to listen on */
     if (argc != 2) {
-        controller = createController(defaultPort);
+        controller = createController(DEFAULT_PORT);
     } else {
         controller = createController(argv[1]);
     }

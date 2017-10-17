@@ -5,5 +5,6 @@
 #define MAXDATASIZE 100
 #define STRING_SIZE 7
 #define RETURNED_ERROR -1
+#define DEFAULT_PORT "12345"
 
 #endif  // GLOBAL_H
