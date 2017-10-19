@@ -32,7 +32,7 @@ void *makeSelection(Hangman *h) {
     if (strcmp(option, "1") == 0) {
         //PLAY HANGMAN
         printf("Play hangman\n");
-        PlayHangman(h);
+        playHangman(h);
     } else if (strcmp(option, "2") == 0) {
         //SHOW LEADERBOARD
         printf("Show leaderboard\n");
