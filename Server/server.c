@@ -30,7 +30,8 @@ int main(int argc, char* argv[]) {
         controller = createController(argv[1]);
     } else if (argc > 2 || argc < 1) {
         fprintf(stderr, "Incorrect usage. Correct usage below:\n"); 
-        fprintf(stderr, "./server.exe port_number\n");
+        fprintf(stderr, "./server port_number\n");
+        fprintf(stderr, "./server\n");
         exit(1); 
     } else {
         controller = createController(DEFAULT_PORT);

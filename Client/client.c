@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
         controller = createController(argv[1], argv[2]);
     } else if (argc > 3 || argc < 2) {
         fprintf(stderr, "Incorrect usage. Correct usage below:\n");
-        fprintf(stderr, "./client.exe your_ip port_number\n");        
-        fprintf(stderr, "./client.exe your_ip\n");
+        fprintf(stderr, "./client your_ip port_number\n");        
+        fprintf(stderr, "./client your_ip\n");
         exit(1);
     } else {
         controller = createController(argv[1], DEFAULT_PORT);
