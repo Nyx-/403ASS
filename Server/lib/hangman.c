@@ -20,8 +20,11 @@ void gameSetup() {
 
 void **selectWords() {
     int num = -1;
-    //Need to do something here cause the same number pops up each time
+    // LOL, hopefully a little more random than the plain old 'srand(time(NULL))', but still speedy.
+    srand((unsigned int)time(NULL));
+    srand(rand());
     num = rand() % controller->c_wordList->numWords;
+
     printf("Word number: %d\n", num);
 
     return controller->c_wordList->words[num];
