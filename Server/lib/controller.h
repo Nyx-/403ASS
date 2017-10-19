@@ -11,9 +11,11 @@ typedef struct WordList WordList;
 typedef struct Controller {
     Connection *connection;
     WordList *c_wordList;
+    volatile int quit_signal;
 } Controller;
 
 Controller *createController(char *port);
+void quitSignalHandler();
 
 Controller *controller;
 
