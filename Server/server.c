@@ -25,14 +25,18 @@ int main(int argc, char* argv[]) {
     socklen_t sin_size;
     int i = 0;
 
-    /* Get port number for server to listen on */
-    if (argc != 2) {
-        controller = createController(DEFAULT_PORT);
-    } else {
+    // block to detect CLI usage was correct or not.
+    if (argc == 2) {
         controller = createController(argv[1]);
+    } else if (argc > 2 || argc < 1) {
+        fprintf(stderr, "Incorrect usage. Correct usage below:\n"); 
+        fprintf(stderr, "./server.exe port_number\n");
+        exit(1); 
+    } else {
+        controller = createController(DEFAULT_PORT);
     }
     if (controller->connection != NULL) {
-        fprintf(stderr, "Something happened correctly woo!\n");
+        fprintf(stderr, "Port successfully opened! Listening now...\n");
 
         loadWords();
         gameSetup();
