@@ -12,13 +12,15 @@
 #include "lib/menu.h"
 
 int main(int argc, char *argv[]) {
-    if (argc != 3) {
-        // fprintf(stderr, "Incorrect parameters\n");
-        // fprintf(stderr, "Usage: client_ip port_number\n");
-        // exit(1);
-        controller = createController(argv[1], DEFAULT_PORT);
-    } else {
+    if (argc == 3) {
         controller = createController(argv[1], argv[2]);
+    } else if (argc > 3 || argc < 2) {
+        fprintf(stderr, "Incorrect usage. Correct usage below:\n");
+        fprintf(stderr, "./client.exe your_ip port_number\n");        
+        fprintf(stderr, "./client.exe your_ip\n");
+        exit(1);
+    } else {
+        controller = createController(argv[1], DEFAULT_PORT);
     }
     if (controller->connection != NULL) {
         //initialise controller->connection->thread
