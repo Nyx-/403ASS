@@ -3,31 +3,12 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "leaderboard.h"
 #include "controller.h"
-#include "menu.h"
 
-void login() {
-    char user[50]; 
-    char pass[50]; 
-    char buf[MAXDATASIZE];
-
-    printf("====================================================\n\n\n" 
-            "Welcome to the Online Hangman Gaming System\n\n\n"
-            "====================================================\n\n\n"); 
-
-    printf("You are required to logon with your registered Username and Password\n\n"); 
-    printf("Please enter your username--> "); 
-    scanf("%s", user); 
-    send(controller->connection->socket, user, sizeof(user), 0);
-    printf("Please enter your password--> "); 
-    scanf("%s", pass);
-    send(controller->connection->socket, pass, sizeof(pass), 0);
-}
-
-void displayGameMenu() {
+void *displayGameMenu(Hangman *game) {
     displayGameTitle();
     displayGameOptions();
+    makeSelection(game);
 }
 
 void displayGameTitle() {
@@ -42,7 +23,7 @@ void displayGameOptions() {
             "<3> Quit\n\n");
 }
 
-void makeSelection() {
+void *makeSelection(Hangman *h) {
     char option[50];
 
     printf("Selection option 1-3 -> ");
@@ -51,7 +32,7 @@ void makeSelection() {
     if (strcmp(option, "1") == 0) {
         //PLAY HANGMAN
         printf("Play hangman\n");
-
+        PlayHangman(h);
     } else if (strcmp(option, "2") == 0) {
         //SHOW LEADERBOARD
         printf("Show leaderboard\n");
@@ -60,6 +41,6 @@ void makeSelection() {
         printf("Quit\n");
     } else {
         printf("\nSelection error, please try again.\n");
-        makeSelection();
+        makeSelection(h);
     }
 }

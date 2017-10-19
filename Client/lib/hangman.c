@@ -6,30 +6,21 @@
 
 #include "hangman.h"
 
-Hangman *createGame(char *word) {
+Hangman *createGame() {
     Hangman *game = malloc(sizeof(Hangman));
+    char *word = "help";
     
     game->guesses = min(strlen(word) + strlen(word) + 10, 26);
     game->guess_letters = calloc(sizeof(char), (size_t) game->guesses);
     
     game->word = word;
     game->currentWord = malloc(strlen(word));
+    return game;
 }
 
-void PlayHangman(char *word) {    
-    int i = 0;
-    // print the word
-    for (i = 0; i < strlen(new_game->word); i++) {
-        new_game->currentWord[i] = '_';
-    }
-
-    display();
-
-    while (new_game->guesses > 0) {
-        checkGuess(getGuess());
-        //for some reason this repeats twice each time you enter a guess
-        display();
-    }
+void *PlayHangman(Hangman *h) {  
+    printf("playhangman");
+    exit(1);
 }
 
 char getGuess() {
@@ -44,34 +35,34 @@ char getGuess() {
         }
 }
 
-void checkGuess(char letter) {
+void *checkGuess(Hangman *h, char letter) {
     int i;
-    char *word1 = new_game->word;
-    char *word2 = new_game->word;
+    char *word1 = h->word;
+    char *word2 = h->word;
 
     letter = tolower(letter);
 
-    for (i = 0; i < strlen(new_game->word); i++) {
-        if (tolower(new_game->word[i]) == letter) {
-            new_game->currentWord[i] = letter;
+    for (i = 0; i < strlen(h->word); i++) {
+        if (tolower(h->word[i]) == letter) {
+            h->currentWord[i] = letter;
         }
     }
 }
 
-void display() {
-    printf("Guessed letters: %s\n\n", new_game->guess_letters);
-    printf("Number of guesses left: %d\n\n", new_game->guesses);
+void *display(Hangman *h) {
+    printf("Guessed letters: %s\n\n", h->guess_letters);
+    printf("Number of guesses left: %d\n\n", h->guesses);
 
-    displayWord();
+    displayWord(h);
 
 }
 
-void displayWord() {
+void *displayWord(Hangman *h) {
     int i = 0;
     // print the word
     printf("Word: ");
-    for (i = 0; i < strlen(new_game->word); i++) {
-        printf("%c ", new_game->currentWord[i]);
+    for (i = 0; i < strlen(h->word); i++) {
+        printf("%c ", h->currentWord[i]);
     }
     printf("\n\n");
 }

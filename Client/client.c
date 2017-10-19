@@ -9,9 +9,10 @@
 
 #include "lib/_global.h"
 #include "lib/controller.h"
-#include "lib/menu.h"
 
 int main(int argc, char *argv[]) {
+    Controller *controller;
+
     if (argc == 3) {
         controller = createController(argv[1], argv[2]);
     } else if (argc > 3 || argc < 2) {
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
 
         /* Receive data from server */
         // Receive_Array_Int_Data(controller->connection->socket, STRING_SIZE);
-        login();
+        login(controller->connection);
 
         int numbytes;
         char* buf[MAXDATASIZE];
@@ -46,8 +47,7 @@ int main(int argc, char *argv[]) {
 
         if (strcmp(loginAuth, "correct") == 0) {
             //show main game menu
-            displayGameMenu();
-            makeSelection();
+            displayGameMenu(controller->hangman);
             while(1);
         } else if (strcmp(loginAuth, "incorrect") == 0) {
             //show exit game message

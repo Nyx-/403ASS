@@ -1,6 +1,8 @@
 #ifndef LEADERBOARD_H
 #define LEADERBOARD_H
 
+#include "_global.h"
+
 typedef struct Leaderboard {
     char names;
     int played;

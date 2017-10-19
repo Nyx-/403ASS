@@ -1,8 +1,9 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "_global.h"
 #include <pthread.h>
+
+#include "_global.h"
 
 typedef struct Connection {
     char *ip;
@@ -19,7 +20,7 @@ void Receive_Array_Int_Data(int socket_identifier, int size);
 void invalidConnection();
 
 // void initialise();
-void login();
+void *login(Connection *c);
 // void listen();
 // void close();
 

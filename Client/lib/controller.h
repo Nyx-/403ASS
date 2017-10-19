@@ -5,6 +5,7 @@
 #include "connection.h"
 #include "hangman.h"
 #include "leaderboard.h"
+#include "menu.h"
 
 typedef struct Connection Connection;
 typedef struct Hangman Hangman;
@@ -16,7 +17,5 @@ typedef struct Controller {
 } Controller;
 
 Controller *createController(char *host, char *port);
-
-Controller *controller;
 
 #endif  // CONTROLLER_H

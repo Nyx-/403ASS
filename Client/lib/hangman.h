@@ -13,14 +13,11 @@ typedef struct Hangman {
     char* word2;
 } Hangman; 
 
-void PlayHangman(char *word);
-
-Hangman *createGame(char *word);
+Hangman *createGame();
+void *PlayHangman(Hangman *h);
 char getGuess();
-void checkGuess(char letter);
-void display();
-void displayWord();
-
-Hangman *new_game;
+void *checkGuess(Hangman *h, char letter);
+void *display(Hangman *h);
+void *displayWord(Hangman *h);
 
 #endif  // HANGMAN_H

@@ -7,7 +7,7 @@ Controller *createController(char *host, char *port) {
 
     //register the connection
     c->connection = newConnection(host, port);
-    c->hangman = NULL;
+    c->hangman = createGame();
     c->leaderboard = NULL;
 
     return c;

@@ -1,10 +1,12 @@
 #ifndef MENU_H
 #define MENU_H
 
-void login(); 
-void displayGameMenu();
+#include "_global.h"
+#include "hangman.h"
+
+void *displayGameMenu(Hangman *game);
 void displayGameTitle();
 void displayGameOptions();
-void makeSelection(); 
+void *makeSelection(Hangman *game); 
 
 #endif  // MENU_H
