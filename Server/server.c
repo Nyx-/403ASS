@@ -41,8 +41,10 @@ int main(int argc, char* argv[]) {
         loadWords();
         gameSetup();
 
+        signal(SIGINT, quitSignalHandler);
+
         /* Main accept() loop */
-        while (LOOP) {
+        while (!controller->quit_signal) {
             sin_size = sizeof(struct sockaddr_in);
             if ((new_fd = accept(controller->connection->socket, (struct sockaddr*)&client_addr,
                                 &sin_size)) == RETURNED_ERROR) {

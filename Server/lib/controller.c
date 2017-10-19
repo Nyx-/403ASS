@@ -8,12 +8,22 @@ Controller *createController(char *port) {
 
     c->connection = newConnection(port);
     c->c_wordList = createWordList();
-    c->quit_signal = 0;
+    c->quit_signal = false;
 
     return c;
 }
 
 void quitSignalHandler() {
-    controller->quit_signal = 1;
+    printf("quitSignalHandler...\n");
+    controller->quit_signal = true;
+    exitGracefully();
     //close connections and threads etc
+}
+
+void exitGracefully() {
+    printf("exitGraceully...\n");
+    exit(1);
+    // clear(memorystuffs);
+    // close(socket);
+    // close(filedescriptors);
 }
