@@ -24,18 +24,18 @@ Connection *newConnection(char *ip, char *port) {
 
     if (port == 0) {
         perror("[newConnection] Invalid Port\n");
-        exit(1);
+        return NULL;
     }
 
     if ((he = gethostbyname(c->ip)) == NULL) {
         herror("[newConnection] Invalid host IP\n");
-        exit(1);
+        return NULL;
     }
 
     //create and validate socket connection
     if ((c->socket = socket(AF_INET , SOCK_STREAM , 0)) == RETURNED_ERROR) {
         perror("[newConnection] Could not create socket\n");
-        exit(1);
+        return NULL;
     }
     
     server.sin_family = AF_INET;
@@ -46,7 +46,7 @@ Connection *newConnection(char *ip, char *port) {
     //Connect and validate connection to remote server
     if (connect(c->socket, (struct sockaddr *)&server, sizeof(struct sockaddr)) == -1) {
         perror("[newConnection] Connection to server failed\n");
-        exit(1);
+        return NULL;
     }
 
     return c;
@@ -73,8 +73,6 @@ void Receive_Array_Int_Data(int socket_identifier, int size) {
     }
 
     printf("%s\n", finalOutput);
-    login();
-    // PlayHangman(finalOutput);
 }
 
 void invalidConnection() {
