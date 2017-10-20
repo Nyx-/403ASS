@@ -47,11 +47,6 @@ void *makeSelection(Controller *c) {
         printf("\nSelection error, please try again.\n");
         makeSelection(c);
     }
-    if (c->hangman->winCondition) {
-        printf("\nWell done %s! You won this round of Hangman!\n", c->currentPlayer);
-    } else {
-        printf("\nBad luck %s! You have run out of guesses. The Hangman got you!\n", c->currentPlayer);
-    }
     displayGameOptions();
     makeSelection(c);
 }

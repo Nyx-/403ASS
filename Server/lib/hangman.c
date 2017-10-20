@@ -225,9 +225,9 @@ void endGame(Hangman *h) {
 
 void clearGameMemory(Hangman *h) {
     free(h->status);
+    free(h->winCondition);
     free(h->guesses);
     free(h->guess_letters);
-    free(h->c_guessed);
     free(h->word_pair);
     free(h->word1);
     free(h->word1_len);
