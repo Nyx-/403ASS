@@ -12,13 +12,11 @@ typedef struct User {
 
 typedef struct Leaderboard {
     User *list;
-    int count;
+    int userCount;
 } Leaderboard;
 
 Leaderboard *createLeaderboard();
-void clearLeaderboard(Leaderboard l);
-void displayLeaderboard(Leaderboard *lb);
-
-Leaderboard *lb;
+void *freeLeaderboard(Leaderboard *lb);
+void *displayLeaderboard(Leaderboard *lb);
 
 #endif  // LEADERBOARD_H

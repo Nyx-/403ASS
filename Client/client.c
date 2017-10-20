@@ -49,7 +49,6 @@ int main(int argc, char *argv[]) {
         if (strcmp(loginAuth, "correct") == 0) {
             //show main game menu
             displayGameMenu(controller);
-            while(1);
         } else if (strcmp(loginAuth, "incorrect") == 0) {
             //show exit game message
             invalidConnection();

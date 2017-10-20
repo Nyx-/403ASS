@@ -18,21 +18,25 @@ Hangman *createGame() {
     //TODO: this is almost definitely wrong.
     game->guessedLetters = malloc((game->firstWordLength + game->secondWordLength) * sizeof(char*));
 
+    game->notOver = true;
+
     return game;
 }
 
 void *playHangman(Hangman *h, Connection *c) {
-    getWords(h, c); 
-    printf("playhangman\n");
-    // printf("%d\n", h->firstWordLength);
-    // printf("%d\n", h->secondWordLength);
-    printf("%d\n", h->guessesLeft);
-    printf("%d\n", h->guessesMade);
-
-    printWords(h);
+    while (h->notOver && h->guessesLeft > 0) {
+        getWords(h, c); 
+        printf("playhangman\n");
+        // printf("%d\n", h->firstWordLength);
+        // printf("%d\n", h->secondWordLength);
+        printf("%d\n", h->guessesLeft);
+        printf("%d\n", h->guessesMade);
     
-    getGuess(h);
-    // exit(1);
+        printWords(h);
+        
+        getGuess(h);
+    }
+    printf("gameover\n");
 }
 
 void *getGuess(Hangman *h) {
