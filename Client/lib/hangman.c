@@ -12,6 +12,7 @@ Hangman *createGame() {
     // game->firstWordLength = getFirstWordLength();
     // game->secondWordLength = getSecondWordLength();
 
+    game->status = 1; //game currently ongoing
     game->guessesLeft = min(game->firstWordLength + game->secondWordLength + 10, 26);
     game->guessesMade = 0;
 

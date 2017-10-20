@@ -4,7 +4,8 @@
 #include "_global.h"
 #include "controller.h"
 
-typedef struct Hangman { 
+typedef struct Hangman {
+    int status; 
     char* word_a;
     char* word_b;
     int firstWordLength;
