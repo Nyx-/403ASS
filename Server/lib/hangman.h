@@ -4,8 +4,10 @@
 #include "controller.h"
 
 typedef struct Hangman {
+    int status;
     int guesses;
     char* guess_letters;
+    char c_guessed;
     char** word_pair;
     char* word1;
     int word1_len;
@@ -21,7 +23,9 @@ typedef struct WordList {
 } WordList;
 
 void gameSetup();
-void prepareWord(Hangman *h, char *letter);
+void listenForGuess(Hangman *h);
+void prepareWord(Hangman *h, char letter);
+int appendGuess(char *s, char c);
 void **selectWords();
 WordList *createWordList();
 void loadWords();

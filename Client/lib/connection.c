@@ -9,8 +9,6 @@
 #include <netdb.h>
 
 #include "connection.h"
-#include "hangman.h"
-#include "menu.h"
 #include "leaderboard.h"
 
 Connection *newConnection(char *ip, char *port) {
