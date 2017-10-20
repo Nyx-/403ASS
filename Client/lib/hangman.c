@@ -7,17 +7,20 @@
 
 #include "hangman.h"
 
-Hangman *createGame(Connection *c) {
+Hangman *createGame() {
     Hangman *game = malloc(sizeof(Hangman));
     game->status = 1; //game currently ongoing
 
     return game;
 }
 
-void *playHangman(Hangman *h, Connection *c) {
-    h->wordPair = (char**) splitWords(h, getWords(c));
-    h->word_a = h->wordPair[0];
-    h->word_b = h->wordPair[1];
+void *playHangman() {
+    Hangman *h = controller->hangman;
+    Connection *c = controller->connection;
+
+    h->wordPair = (char**) splitWords(getWords(c));
+    // h->word_a = h->wordPair[0];
+    // h->word_b = h->wordPair[1];
     printf("%s, %s\n", h->word_a, h->word_b);
 
     h->firstWordLength = strlen(h->word_a);
@@ -34,19 +37,24 @@ void *playHangman(Hangman *h, Connection *c) {
     printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
 
     while (h->guessesLeft != 0) {
-        getGuess(h, c);
-        h->wordPair = (char**) splitWords(h, getWords(c));
-        h->word_a = h->wordPair[0];
-        h->word_b = h->wordPair[1];
+        getGuess(c);
+        h->wordPair = (char**) splitWords(getWords(c));
+        // h->word_a = h->wordPair[0];
+        // h->word_b = h->wordPair[1];
         printf("Guessed letters: %s\n\n", h->guessedLetters);
         printf("Number of guesses left: %d\n\n", h->guessesLeft);
         printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
+
     }
     // exit(1);
 }
 
 
-void *getGuess(Hangman *h, Connection *c) {
+
+
+void *getGuess(Connection *c) {
+    Hangman *h = controller->hangman;
+
     printf("\n\nEnter your guess - ");
     char sendChar[2];
     scanf("%c", sendChar);
@@ -71,7 +79,9 @@ int appendGuess(char *s, char c) {
     return 0;
 }
 
-void** splitWords(Hangman *h, char* wordPair) {
+void** splitWords(char* wordPair) {
+    Hangman *h = controller->hangman;
+
     char *token;
     void** splitPair;
     char *word_1; 
@@ -82,13 +92,16 @@ void** splitWords(Hangman *h, char* wordPair) {
     word_2 = calloc(256, sizeof(char));
 
     token = strtok(wordPair, ",");
-    word_1 = token;
+    h->word_a = token;
     token = strtok(NULL, ",");
-    word_2 = token;
+    h->word_b = token;
 
     splitPair[0] = word_1;
     splitPair[1] = word_2;
-    printf("%s, %s\n", word_1, word_2);
+    printf("%s, %s\n", h->word_a, h->word_b);
+
+    // h->word_a = word_1;
+    // h->word_b = word_2;
 
     return splitPair;
 
@@ -113,6 +126,7 @@ char *getWords(Connection *c) {
         // printf("%s\n", h->word_a);
         // h->firstWordLength = getWordLength(h->word_a);
         // printf("%d\n", h->firstWordLength);
+        printf("%s\n", receivedMessage);
         return receivedMessage;
     }
     

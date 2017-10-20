@@ -32,9 +32,14 @@ void gameSetup() {
 
     printf("Guesses %d\n", h->guesses);
 
-    //not sure if this is necessary
     h->client_word1 = malloc(h->word1_len * sizeof(char) + 1);
-    h->client_word2 = malloc(h->word1_len * sizeof(char) + 1);
+    h->client_word2 = malloc(h->word2_len * sizeof(char) + 1);
+    for (int i=0; i < h->word1_len; i++) {
+        h->client_word1[i] = ' ';
+    }
+    for (int k=0; k < h->word2_len; k++) {
+        h->client_word2[k] = ' ';
+    }
 
     char charac1 = '_';
     char charac2 = 'a';
