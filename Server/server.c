@@ -15,6 +15,7 @@
 #include "lib/connection.h"
 #include "lib/authentication.h"
 #include "lib/hangman.h"
+#include "lib/leaderboard.h"
 
 int main(int argc, char* argv[]) {
     /* Thread attributes here */

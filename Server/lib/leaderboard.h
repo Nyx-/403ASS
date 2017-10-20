@@ -17,5 +17,7 @@ typedef struct Leaderboard {
 Leaderboard *createLeaderboard();
 void addUserToLeaderboard(Leaderboard *lb, char *user);
 void freeLeaderboard(Leaderboard *lb);
+void sendLeaderboardUpdateToClient(Leaderboard *lb);
+void confirmLeaderboardRecv();
 
 #endif  // LEADERBOARD_H

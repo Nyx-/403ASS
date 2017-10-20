@@ -10,7 +10,7 @@
 
 typedef struct Connection Connection;
 typedef struct WordList WordList;
-typedef struct Leaderboard leaderboard;
+typedef struct Leaderboard Leaderboard;
 
 typedef struct Controller {
     int new_fd;
