@@ -30,10 +30,31 @@ void *playHangman() {
     h->firstWordLength = strlen(h->word_a);
     h->secondWordLength = strlen(h->word_b);
 
-    printf("Guessed letters: %s\n\n", h->guessedLetters);
-    printf("Number of guesses left: %d\n\n", h->guessesLeft);
-    printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
-    getGuess(c);
+    while (h->guessesLeft != 0 && h->status == 1) {
+        printf("Guessed letters: %s\n\n", h->guessedLetters);
+        printf("Number of guesses left: %d\n\n", h->guessesLeft);
+        printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
+        
+        printf("\n\nEnter your guess - ");
+        char sendChar[10];
+        scanf("%s", sendChar);
+        getchar();
+        printf("%s", sendChar);
+        send(c->socket, sendChar, sizeof(sendChar), 0);
+        printf("\n..........................................\n\n\n");
+
+        h->word_a = receiveItems(c);
+        sendConfirm(c);
+        h->word_b = receiveItems(c);
+        sendConfirm(c);
+        h->guessedLetters = receiveItems(c);
+        sendConfirm(c);
+        h->guessesLeft = receiveInt(c);
+        sendConfirm(c);
+
+    }
+
+    
 }
 
 char* receiveItems(Connection *c) {

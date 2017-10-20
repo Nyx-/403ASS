@@ -8,11 +8,14 @@
 typedef struct Connection Connection;
 typedef struct Hangman {
     int status; 
+    int winCondition;
+
     char** wordPair;
     char* word_a;
     char* word_b;
     int firstWordLength;
     int secondWordLength;
+    
     int guessesLeft;
     int guessesMade;
     char* guessedLetters;

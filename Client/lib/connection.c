@@ -91,6 +91,7 @@ void *login(Controller *c) {
     printf("You are required to logon with your registered Username and Password\n\n"); 
     printf("Please enter your username--> "); 
     scanf("%s", user); 
+    c->currentPlayer = user;
     addUserToLeaderboard(c->leaderboard, user);
     send(c->connection->socket, user, sizeof(user), 0);
     printf("Please enter your password--> "); 

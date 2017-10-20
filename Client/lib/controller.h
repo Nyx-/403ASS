@@ -11,6 +11,7 @@ typedef struct Hangman Hangman;
 typedef struct Leaderboard Leaderboard;
 
 typedef struct Controller {
+    char* currentPlayer;
     Connection *connection;
     Hangman *hangman;
     Leaderboard *leaderboard;
