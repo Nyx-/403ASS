@@ -4,7 +4,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "controller.h"
 #include "authentication.h"
+#include "leaderboard.h"
 
 void authenticateUser(int new_fd) {
     char* userReceived[MAXDATASIZE], passReceived[MAXDATASIZE], sendData[MAXDATASIZE];
@@ -22,9 +24,9 @@ void authenticateUser(int new_fd) {
         perror("[authenticateUser] unable to receive username");
         exit(1);
     }
-    u->name = userReceived;
+    addUserToLeaderboard(controller->leaderboard, userReceived);
 
-    printf("Username received: %s\n", u->name);
+    printf("Username received: %s\n", (char*) userReceived);
 
     if (recv(new_fd, passReceived, sizeof(passReceived), 0) == RETURNED_ERROR) {
         perror("[authenticateUser] unable to receive password");
@@ -34,7 +36,7 @@ void authenticateUser(int new_fd) {
 
     printf("Password received: %s\n", password);
 
-    strcpy(sendData, checkAuth(u->name, password));
+    strcpy(sendData, checkAuth(userReceived, password));
     send(new_fd, sendData, strlen(sendData), 0);
 }
 
@@ -73,4 +75,3 @@ char* checkAuth(char* name, char* pass) {
 //     printf("to lower: %s", temp);
 //     return temp;
 // }
-

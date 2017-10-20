@@ -9,6 +9,7 @@ Controller *createController(char *port) {
 
     c->connection = newConnection(port);
     c->c_wordList = createWordList();
+    c->leaderboard = createLeaderboard();
     c->quit_signal = false;
 
     return c;

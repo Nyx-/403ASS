@@ -4,6 +4,9 @@
 #include <pthread.h>
 
 #include "_global.h"
+#include "controller.h"
+
+typedef struct Controller Controller;
 
 typedef struct Connection {
     char *ip;
@@ -20,7 +23,7 @@ void Receive_Array_Int_Data(int socket_identifier, int size);
 void invalidConnection();
 
 // void initialise();
-void *login(Connection *c);
+void *login(Controller *c);
 // void listen();
 // void close();
 

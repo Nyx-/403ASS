@@ -6,14 +6,18 @@
 #include "_global.h"
 #include "connection.h"
 #include "hangman.h"
+#include "leaderboard.h"
 
 typedef struct Connection Connection;
 typedef struct WordList WordList;
+typedef struct Leaderboard leaderboard;
 
 typedef struct Controller {
     int new_fd;
     Connection *connection;
     WordList *c_wordList;
+    Leaderboard *leaderboard;
+    
     volatile bool quit_signal;
 } Controller;
 

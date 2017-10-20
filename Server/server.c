@@ -59,8 +59,6 @@ int main(int argc, char* argv[]) {
             pthread_attr_init(&attr);
             pthread_create(&client_thread, &attr, authenticateUser, new_fd);
 
-            
-
             pthread_join(client_thread, NULL);
             char* msg[MAXDATASIZE];
             if (recv(new_fd, msg, sizeof(msg), 0) == RETURNED_ERROR) {

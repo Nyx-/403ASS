@@ -7,7 +7,7 @@
 #include "controller.h"
 #include "connection.h"
 
-typedef struct Connection connection;
+typedef struct Connection Connection;
 
 typedef struct Hangman { 
     char* word_a;

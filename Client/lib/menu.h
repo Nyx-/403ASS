@@ -10,6 +10,7 @@ typedef struct Controller Controller;
 typedef struct Hangman Hangman;
 
 void *displayGameMenu(Controller *c);
+void printGameLine();
 void displayGameTitle();
 void displayGameOptions();
 void *makeSelection(Controller *c); 

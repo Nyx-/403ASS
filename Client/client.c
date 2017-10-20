@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
         /* Receive data from server */
         // Receive_Array_Int_Data(controller->connection->socket, STRING_SIZE);
-        login(controller->connection);
+        login(controller);
 
         int numbytes;
         char* buf[MAXDATASIZE];

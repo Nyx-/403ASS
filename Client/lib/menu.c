@@ -6,18 +6,22 @@
 #include "menu.h"
 
 void *displayGameMenu(Controller *c) {
-    displayGameTitle();
     displayGameOptions();
     makeSelection(c);
 }
 
+void printGameLine() {
+    printf("\n=============================================================================\n\n");
+}
+
 void displayGameTitle() {
-    printf("\n=============================================================================\n\n\n"
-            "Welcome to the Hangman Gaming System\n\n\n\n");
+    printGameLine();
+    printf("Welcome to the Hangman Gaming System\n");
+    printGameLine();
 }
 
 void displayGameOptions() {
-    printf("Please enter a selection\n"
+    printf("\nPlease enter a selection\n"
             "<1> Play Hangman\n"
             "<2> Show Leaderboard\n"
             "<3> Quit\n\n");
@@ -31,12 +35,10 @@ void *makeSelection(Controller *c) {
 
     if (strcmp(option, "1") == 0) {
         //PLAY HANGMAN
-        printf("Play hangman\n");
         send(c->connection->socket, option, sizeof(option), 0);
         playHangman(c->hangman, c->connection);
     } else if (strcmp(option, "2") == 0) {
         //SHOW LEADERBOARD
-        printf("Show leaderboard\n");
         displayLeaderboard(c->leaderboard);
     } else if (strcmp(option, "3") == 0) {
         //QUIT
