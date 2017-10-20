@@ -12,7 +12,6 @@ typedef struct Connection {
     char *ip;
     short unsigned int port;
     int socket;
-    pthread_t thread;
 } Connection;
 
 Connection *newConnection(char *ip, char *port);

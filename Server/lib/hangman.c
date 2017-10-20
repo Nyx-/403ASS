@@ -182,3 +182,7 @@ void saveWords(void *wPair, WordList *list) {
     list->words = re_wordList;
     list->words[list->numWords - 1] = wPair;
 }
+
+void endGame(Hangman *h) {
+    h->status = 0;
+}

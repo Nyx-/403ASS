@@ -55,3 +55,8 @@ void receiveData(int socket_id) {
         send(socket_id, &charBytes, sizeof(uint8_t), 0);
     }
 }
+
+void closeConnection(Controller *c) {
+    close(c->connection->socket);
+    c->connection = NULL;
+}

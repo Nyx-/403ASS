@@ -2,6 +2,9 @@
 #define CONNECTION_H
 
 #include "_global.h"
+#include "controller.h"
+
+typedef struct Controller Controller;
 
 typedef struct Connection {
     char *ip;
@@ -11,9 +14,9 @@ typedef struct Connection {
 
 Connection *newConnection(char *port);
 void receiveData(int socket_id);
+void closeConnection(Controller *c);
 
 // void initialise();
 // void listen();
-// void close();
 
 #endif  // CONNECTION_H

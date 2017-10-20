@@ -25,12 +25,7 @@ int main(int argc, char *argv[]) {
         controller = createController(argv[1], DEFAULT_PORT);
     }
     if (controller->connection != NULL) {
-        //initialise controller->connection->thread
-        //in the initialise thingo, check for if it fails to start the thread, and throw error.
-        //game initialise
 
-        /* Receive data from server */
-        // Receive_Array_Int_Data(controller->connection->socket, STRING_SIZE);
         login(controller);
 
         int numbytes;

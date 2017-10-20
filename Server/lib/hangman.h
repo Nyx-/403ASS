@@ -30,6 +30,7 @@ void **selectWords();
 WordList *createWordList();
 void loadWords();
 void saveWords(void *wPair, WordList *list);
+void endGame(Hangman *h);
 
 Hangman *h;
 

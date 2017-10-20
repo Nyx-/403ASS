@@ -11,7 +11,7 @@ Leaderboard *createLeaderboard() {
     return lb;
 }
 
-void *freeLeaderboard(Leaderboard *lb) {
+void freeLeaderboard(Leaderboard *lb) {
     printf("Free leaderboard\n");
 }
 

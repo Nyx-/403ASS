@@ -18,3 +18,7 @@ void addUserToLeaderboard(Leaderboard *lb, char *user) {
     lb->list->wins = 0;
     lb->userCount += 1;
 }
+
+void freeLeaderboard(Leaderboard *lb) {
+    printf("free leaderboard\n");
+}
