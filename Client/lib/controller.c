@@ -12,3 +12,11 @@ Controller *createController(char *host, char *port) {
 
     return c;
 }
+
+void exitGracefully(Controller *c) {
+    printf("exitGraceully...\n");
+    exit(1);
+    // clear(memorystuffs);
+    // close(socket);
+    // close(filedescriptors);
+}

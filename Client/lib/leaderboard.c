@@ -16,12 +16,13 @@ void printLeaderboardLine() {
 }
 
 void *displayLeaderboard(Leaderboard *lb) {
+    //fetchLeaderboardDataFromServer, and update local lb->list
     if (lb->userCount == 0) {
         printLeaderboardLine();
         printf("There is no information currently stored in the Leaderboard. Try again later\n");
         printLeaderboardLine();
     } else {
-        //fetchLeaderboardDataFromServer, and update local lb->list
+        //TODO: For each user, print the following:
         printLeaderboardLine();
         printf("\nPlayer\t- %s\nNumber of games won  - %d\nNumber of games played  - %d\n",
         lb->list->name,

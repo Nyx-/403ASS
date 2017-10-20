@@ -17,5 +17,6 @@ typedef struct Controller {
 } Controller;
 
 Controller *createController(char *host, char *port);
+void exitGracefully(Controller *c);
 
 #endif  // CONTROLLER_H
