@@ -30,5 +30,6 @@ void *checkGuess(Hangman *h, char letter);
 void *display(Hangman *h);
 void *displayWord(Hangman *h);
 int getWordLength(char* word);
+void endGame(Hangman *h);
 
 #endif  // HANGMAN_H

@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <pthread.h>
 #include <netdb.h>
+#include <unistd.h>
 
 #include "connection.h"
 #include "leaderboard.h"
@@ -95,4 +96,9 @@ void *login(Controller *c) {
     printf("Please enter your password--> "); 
     scanf("%s", pass);
     send(c->connection->socket, pass, sizeof(pass), 0);
+}
+
+void closeConnection(Controller *c) {
+    close(c->connection->socket);
+    c->connection = NULL;
 }

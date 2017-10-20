@@ -37,7 +37,7 @@ void *playHangman(Hangman *h, Connection *c) {
     // printWords(h);
     while (h->guessesLeft != 0) {
         displayHangman(h);
-        getWords(h, c); 
+        getWords(h, c);
         printWords(h);
         getGuess(h, c);
     }
@@ -115,4 +115,8 @@ void printWords(Hangman *h) {
 
 int getWordLength(char* word) {
     return (size_t) strlen(word);
+}
+
+void endGame(Hangman *h) {
+    h->status = 0;
 }

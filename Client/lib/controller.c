@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 #include "controller.h"
+#include "connection.h"
+#include "leaderboard.h"
 
 Controller *createController(char *host, char *port) {
     Controller *c = malloc(sizeof(Controller));
@@ -16,6 +18,9 @@ Controller *createController(char *host, char *port) {
 
 void exitGracefully(Controller *c) {
     printf("exitGraceully...\n");
+    closeConnection(c);
+    endGame(c->hangman);
+    freeLeaderboard(c->leaderboard);
     exit(1);
     // clear(memorystuffs);
     // close(socket);

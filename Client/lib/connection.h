@@ -17,7 +17,7 @@ typedef struct Connection {
 
 Connection *newConnection(char *ip, char *port);
 int initialiseConnection();
-void closeConnection();
+void closeConnection(Controller *c);
 
 void Receive_Array_Int_Data(int socket_identifier, int size);
 void invalidConnection();
