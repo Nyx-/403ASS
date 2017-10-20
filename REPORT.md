@@ -5,12 +5,12 @@
 * [y]     Server authenticates client using data in “Authentication.txt” file
 * [y]     Server loads & tokenises “hangman_text.txt” file correctly
 * [y]     Server randomly selects a two-word phrase
-* n[]      Server updates Leader Board when a client finishes playing a Hangman game
+* [ ]     Server updates Leader Board when a client finishes playing a Hangman game
 * [y]     Server exits gracefully upon receiving SIGNAL (ctrl + c)
 * [y]     Client command line parameters
 * [y]     Client menu implementation
-* [n]      Client plays Hangman as per assignment specifications when user selects “Play Hangman”
-* [n]      Client displays leader board as per assignment specifications when user selects option “Show Leader Board”
+* [ ]     Client plays Hangman as per assignment specifications when user selects “Play Hangman”
+* [ ]     Client displays leader board as per assignment specifications when user selects option “Show Leader Board”
 * [y]     Client exits gracefully when user selects “Quit” option from menu
 * [y]     Description of the data structure that is used for the Leader Board in your report
 
