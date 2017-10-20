@@ -41,37 +41,34 @@ void gameSetup() {
 
     prepareWord(h, charac1);
 
-    // char *sendingString = malloc(strlen(h->word1_len) + strlen(h->word2_len) + 1);
-    // if (sendingString) {
-    //     strcpy(sendingString, h->client_word1);
-    //     strcat(sendingString, ",");
-    //     strcat(sendingString, h->client_word2);
-    // }
+    printf("client 1: %s\n", h->client_word1);
+    printf("client 2: %s\n", h->client_word2);
+
+    char* sendWord1[MAXDATASIZE], sendWord2[MAXDATASIZE];
+    memset(sendWord1, 0, sizeof(sendWord1));
+    memset(sendWord2, 0, sizeof(sendWord2));
+
+    strcpy(sendWord1, h->client_word1);
+    strcpy(sendWord2, h->client_word2);
+
+    send(controller->new_fd, sendWord1, strlen(sendWord1), 0);
+    send(controller->new_fd, sendWord2, strlen(sendWord2), 0);
+
+    while(1) {
+        listenForGuess(h);
+    }
+
     
-    // printf("%s\n", &sendingString);
-
-    // prepareWord(h, charac2);
-
-    // printf("client 1: %s\n", h->client_word1);
-    // printf("client 2: %s\n", h->client_word2);
-    // printf("guesses: %s\n", h->guess_letters);
-
-    send(controller->new_fd, h->client_word1, (size_t) h->word1_len * sizeof(char), 0);
-    send(controller->new_fd, h->client_word2, (size_t) h->word2_len * sizeof(char), 0);
-    // send(controller->new_fd, sendingString, sizeof(sendingString), 0);
-
-    listenForGuess(h);
 }
 
 void listenForGuess(Hangman *h) {
-    while(h->status) {
-        char* msg[MAXDATASIZE];
-        if (recv(controller->new_fd, msg, sizeof(msg), 0) == RETURNED_ERROR) {
-            //check if its a valid guess?
-            h->c_guessed = msg;
-            prepareWord(h, h->c_guessed);
-            //send the prepared words to the client
-        }
+    char* msg[MAXDATASIZE];
+    if (recv(controller->new_fd, msg, sizeof(msg), 0) == RETURNED_ERROR) {
+        //check if its a valid guess?
+        printf("received a thing \n");
+        h->c_guessed = msg;
+        prepareWord(h, h->c_guessed);
+        //send the prepared words to the client
     }
 }
 
@@ -91,21 +88,21 @@ void prepareWord(Hangman *h, char letter) {
         }
     } else {
         for (i = 0; i < w1_len; i++) {
-            printf("%c\n", h->word1[i]);
             if (h->word1[i] == letter) {
                 h->client_word1[i] = letter;
             } else {
                 h->client_word1[i] = '_';
             }
         }
+        h->client_word1[w1_len + 1] = '\0';
         for (k = 0; k < w2_len; k++) {
-            printf("%c\n", h->word2[k]);
             if (h->word2[k] == letter) {
                 h->client_word2[k] = letter;
             } else {
                 h->client_word2[k] = '_';
             }
         }
+        h->client_word1[w2_len + 1] = '\0';
         appendGuess(h->guess_letters, letter);
     }
 
@@ -158,9 +155,9 @@ void loadWords() {
     while(fgets(buffer, sizeof(buffer), file) != NULL) {
         // int numWords = 2;
         wordPair = malloc(2 * sizeof(char*));
-        joinedWords = malloc(256 * sizeof(char));
-        word_1 = malloc(256 * sizeof(char));
-        word_2 = malloc(256 * sizeof(char));
+        joinedWords = calloc(500, sizeof(char));
+        word_1 = calloc(256, sizeof(char));
+        word_2 = calloc(256, sizeof(char));
 
         sscanf(buffer, "%s", joinedWords);
 

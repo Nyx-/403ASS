@@ -62,15 +62,3 @@ char* checkAuth(char* name, char* pass) {
     return "incorrect";
 }
 
-// char* strToLower(char* string) {
-//     char temp[strlen(string)];
-//     int i;
-
-//     for (i = 0; i < strlen(string); i++) {
-//         temp[i] = tolower(temp[i]);
-//     }
-
-//     printf("to lower: %s", temp);
-//     return temp;
-// }
-
