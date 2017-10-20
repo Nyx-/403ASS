@@ -225,4 +225,20 @@ void saveWords(void *wPair, WordList *list) {
 
 void endGame(Hangman *h) {
     h->status = 0;
+    clearGameMemory(h);
+}
+
+void clearGameMemory(Hangman *h) {
+    free(h->status);
+    free(h->guesses);
+    free(h->guess_letters);
+    free(h->c_guessed);
+    free(h->word_pair);
+    free(h->word1);
+    free(h->word1_len);
+    free(h->client_word1);
+    free(h->word2);
+    free(h->word2_len);
+    free(h->client_word2);
+    free(h);
 }

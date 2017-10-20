@@ -31,6 +31,7 @@ WordList *createWordList();
 void loadWords();
 void saveWords(void *wPair, WordList *list);
 void endGame(Hangman *h);
+void clearGameMemory(Hangman *h);
 
 void sendToClient(char* word1, char* word2, char* guess_chars, int guesses);
 void confirmRecv();

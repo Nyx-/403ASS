@@ -175,3 +175,16 @@ void printWords(char* word1, int w1_len, char* word2, int w2_len) {
 void endGame(Hangman *h) {
     h->status = 0;
 }
+
+void clearGameMemory(Hangman *h) {
+    // free(h->status);
+    // free(h->wordPair);
+    // free(h->word_a);
+    // free(h->word_b);
+    // free(h->firstWordLength);
+    // free(h->secondWordLength);
+    // free(h->guessesLeft);
+    // free(h->guessesMade);
+    // free(h->guessedLetters);
+    free(h);
+}

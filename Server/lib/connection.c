@@ -56,7 +56,14 @@ void receiveData(int socket_id) {
     }
 }
 
-void closeConnection(Controller *c) {
-    close(c->connection->socket);
-    c->connection = NULL;
+void closeConnection(Connection *c) {
+    close(c->socket);
+    freeConnection(c);
+}
+
+void freeConnection(Connection *c) {
+    free(c->ip);
+    free(c->port);
+    free(c->socket);
+    free(c);
 }

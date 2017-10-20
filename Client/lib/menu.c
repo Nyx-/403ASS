@@ -42,7 +42,6 @@ void *makeSelection(Controller *c) {
         displayLeaderboard(c->leaderboard);
     } else if (strcmp(option, "3") == 0) {
         //QUIT
-        printf("Quit\n");
         exitGracefully(c);
     } else {
         printf("\nSelection error, please try again.\n");

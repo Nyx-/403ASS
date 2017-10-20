@@ -20,9 +20,13 @@ void addUserToLeaderboard(Leaderboard *lb, char *user) {
     lb->userCount += 1;
 }
 
-// TODO: free()
 void freeLeaderboard(Leaderboard *lb) {
-    printf("free leaderboard\n");
+    free(lb->list->name);
+    free(lb->list->played);
+    free(lb->list->wins);
+    free(lb->list);
+    free(lb->userCount);
+    free(lb);
 }
 
 // UNTESTED

@@ -14,9 +14,7 @@ typedef struct Connection {
 
 Connection *newConnection(char *port);
 void receiveData(int socket_id);
-void closeConnection(Controller *c);
-
-// void initialise();
-// void listen();
+void closeConnection(Connection *c);
+void freeConnection(Connection *c);
 
 #endif  // CONNECTION_H

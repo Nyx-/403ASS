@@ -12,7 +12,12 @@ Leaderboard *createLeaderboard() {
 }
 
 void freeLeaderboard(Leaderboard *lb) {
-    printf("Free leaderboard\n");
+    // free(lb->list->name);
+    // free(lb->list->played);
+    // free(lb->list->wins);
+    // free(lb->list);
+    // free(lb->userCount);
+    free(lb);
 }
 
 void printLeaderboardLine() {

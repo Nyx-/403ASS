@@ -22,9 +22,7 @@ void quitSignalHandler() {
 }
 
 void exitGracefully() {
-    printf("exitGraceully...\n");
-    //join/gracefully handle threads
-    closeConnection(controller);
+    closeConnection(controller->connection);
     endGame(h);
     freeLeaderboard(controller->leaderboard);
     exit(1);

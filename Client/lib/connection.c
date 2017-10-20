@@ -98,7 +98,14 @@ void *login(Controller *c) {
     send(c->connection->socket, pass, sizeof(pass), 0);
 }
 
-void closeConnection(Controller *c) {
-    close(c->connection->socket);
-    c->connection = NULL;
+void closeConnection(Connection *c) {
+    close(c->socket);
+    freeConnection(c);
+}
+
+void freeConnection(Connection *c) {
+    // free(c->ip);
+    // free(c->port);
+    // free(c->socket);
+    free(c);
 }

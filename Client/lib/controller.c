@@ -17,12 +17,10 @@ Controller *createController(char *host, char *port) {
 }
 
 void exitGracefully(Controller *c) {
-    printf("exitGraceully...\n");
-    closeConnection(c);
+    closeConnection(c->connection);
     endGame(c->hangman);
     freeLeaderboard(c->leaderboard);
+    clearGameMemory(c->hangman);
+    printf("\nGoodbye...\n");
     exit(1);
-    // clear(memorystuffs);
-    // close(socket);
-    // close(filedescriptors);
 }
