@@ -5,13 +5,16 @@
 
 typedef struct Hangman {
     int status;
+    int winCondition;
+
     int guesses;
     char* guess_letters;
-    char c_guessed;
     char** word_pair;
+
     char* word1;
     int word1_len;
     char* client_word1;
+
     char* word2;
     int word2_len;
     char* client_word2;
@@ -23,8 +26,7 @@ typedef struct WordList {
 } WordList;
 
 void gameSetup();
-void listenForGuess(Hangman *h);
-void prepareWord(Hangman *h, char letter);
+char* prepareWord(Hangman *h, char* word, char* matchWord, char letter);
 int appendGuess(char *s, char c);
 void **selectWords();
 WordList *createWordList();
