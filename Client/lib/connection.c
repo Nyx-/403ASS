@@ -86,9 +86,9 @@ void *login(Connection *c) {
     char pass[50]; 
     char buf[MAXDATASIZE];
 
-    printf("====================================================\n\n\n" 
+    printf("=============================================================================\n\n\n" 
             "Welcome to the Online Hangman Gaming System\n\n\n"
-            "====================================================\n\n\n"); 
+            "=============================================================================\n\n\n"); 
 
     printf("You are required to logon with your registered Username and Password\n\n"); 
     printf("Please enter your username--> "); 

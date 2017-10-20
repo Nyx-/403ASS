@@ -8,7 +8,11 @@ typedef struct Hangman {
     char* guess_letters;
     char** word_pair;
     char* word1;
+    int word1_len;
+    char* client_word1;
     char* word2;
+    int word2_len;
+    char* client_word2;
 } Hangman;
 
 typedef struct WordList {
@@ -17,6 +21,7 @@ typedef struct WordList {
 } WordList;
 
 void gameSetup();
+void prepareWord(Hangman *h, char *letter);
 void **selectWords();
 WordList *createWordList();
 void loadWords();

@@ -2,11 +2,16 @@
 #define MENU_H
 
 #include "_global.h"
+#include "controller.h"
 #include "hangman.h"
+#include "leaderboard.h"
 
-void *displayGameMenu(Hangman *game);
+typedef struct Controller Controller;
+typedef struct Hangman Hangman;
+
+void *displayGameMenu(Controller *c);
 void displayGameTitle();
 void displayGameOptions();
-void *makeSelection(Hangman *game); 
+void *makeSelection(Controller *c); 
 
 #endif  // MENU_H

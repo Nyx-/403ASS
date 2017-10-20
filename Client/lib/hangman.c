@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <windows.h>
+#include <sys/socket.h>
 
 #include "hangman.h"
 
 Hangman *createGame() {
     Hangman *game = malloc(sizeof(Hangman));
-    game->firstWordLength = getFirstWordLength();
-    game->secondWordLength = getSecondWordLength();
+    // game->firstWordLength = getFirstWordLength();
+    // game->secondWordLength = getSecondWordLength();
 
     game->guessesLeft = min(game->firstWordLength + game->secondWordLength + 10, 26);
     game->guessesMade = 0;
@@ -20,15 +21,18 @@ Hangman *createGame() {
     return game;
 }
 
-void *playHangman(Hangman *h) {  
+void *playHangman(Hangman *h, Connection *c) {
+    getWords(h, c); 
     printf("playhangman\n");
-    printf("%d\n", h->firstWordLength);
-    printf("%d\n", h->secondWordLength);
+    // printf("%d\n", h->firstWordLength);
+    // printf("%d\n", h->secondWordLength);
     printf("%d\n", h->guessesLeft);
     printf("%d\n", h->guessesMade);
+
+    printWords(h);
     
     getGuess(h);
-    exit(1);
+    // exit(1);
 }
 
 void *getGuess(Hangman *h) {
@@ -42,6 +46,46 @@ void *getGuess(Hangman *h) {
             printf("somehow add to h->guessedLetters\n");
         }
     }
+}
+
+void getWords(Hangman *h, Connection *c) {
+    char* buf[MAXDATASIZE], buf2[MAXDATASIZE];
+
+    if (recv(c->socket, buf, MAXDATASIZE, 0) == RETURNED_ERROR) {
+        perror("[hangman] Error receiving first word");
+    } else {
+        h->word_a = buf;
+        printf("%s\n", h->word_a);
+        h->firstWordLength = getFirstWordLength(h);
+        printf("%d\n", h->firstWordLength);
+    }
+
+    if (recv(c->socket, buf2, MAXDATASIZE, 0) == RETURNED_ERROR) {
+        perror("[hangman] Error receiving first word");
+    } else {
+        h->word_b = buf2;
+        printf("%s\n", h->word_b);
+        h->secondWordLength = getSecondWordLength(h);
+        printf("%d\n", h->secondWordLength);
+    }
+    // if (recv(c->socket, buf2, MAXDATASIZE, 0) == RETURNED_ERROR) {
+    //     h->word_a = buf;
+    //     printf("%s\n", h->word_a);
+    //     h->firstWordLength = getFirstWordLength(h);
+    //     printf("%d\n", h->firstWordLength);
+    // }
+}
+
+void printWords(Hangman *h) {
+    int i, k;
+    for (i = 0; i < h->firstWordLength; i++) {
+        printf("%c ", h->word_a[i]);
+    }
+    printf("  ");
+    for (k = 0; k < h->secondWordLength; k++) {
+        printf("%c ", h->word_b[k]);
+    }
+    printf("\n");
 }
 
 // void *checkGuess(Hangman *h, char letter) {
@@ -76,12 +120,14 @@ void *getGuess(Hangman *h) {
 //     printf("\n\n");
 // }
 
-int getFirstWordLength() {
+int getFirstWordLength(Hangman *h) {
     //TODO: Get word length from server
-    return 5;
+    // return 5;
+    return (int) strlen(h->word_a);
 }
 
-int getSecondWordLength() {
+int getSecondWordLength(Hangman *h) {
     //TODO: Get word length from server
-    return 5;
+    // return 5;
+    return (int) strlen(h->word_b);
 }

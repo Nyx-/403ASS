@@ -39,9 +39,6 @@ int main(int argc, char* argv[]) {
     if (controller->connection != NULL) {
         fprintf(stderr, "Port successfully opened! Listening now...\n");
 
-        loadWords();
-        gameSetup();
-
         signal(SIGINT, quitSignalHandler);
 
         /* Main accept() loop */
@@ -55,12 +52,22 @@ int main(int argc, char* argv[]) {
             printf("server: got connection from %s\n",
                 inet_ntoa(client_addr.sin_addr));
 
+            controller->new_fd = new_fd;
             /* Create a thread to accept client */
             pthread_attr_t attr;
             pthread_attr_init(&attr);
             pthread_create(&client_thread, &attr, authenticateUser, new_fd);
 
+            
+
             pthread_join(client_thread, NULL);
+            char* msg[MAXDATASIZE];
+            if (recv(new_fd, msg, sizeof(msg), 0) == RETURNED_ERROR) {
+                perror("Error accepting option\n");
+            } else {
+                loadWords();
+                gameSetup(controller);
+            }
 
             // if (send(new_fd, "All of array data sent by server\n", 40, 0) == RETURNED_ERROR) {
             //     perror("send");

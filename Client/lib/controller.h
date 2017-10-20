@@ -5,10 +5,10 @@
 #include "connection.h"
 #include "hangman.h"
 #include "leaderboard.h"
-#include "menu.h"
 
 typedef struct Connection Connection;
 typedef struct Hangman Hangman;
+typedef struct Leaderboard Leaderboard;
 
 typedef struct Controller {
     Connection *connection;

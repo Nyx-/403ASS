@@ -11,6 +11,7 @@ typedef struct Connection Connection;
 typedef struct WordList WordList;
 
 typedef struct Controller {
+    int new_fd;
     Connection *connection;
     WordList *c_wordList;
     volatile bool quit_signal;

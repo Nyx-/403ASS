@@ -9,6 +9,7 @@
 
 #include "lib/_global.h"
 #include "lib/controller.h"
+#include "lib/menu.h"
 
 int main(int argc, char *argv[]) {
     Controller *controller;
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
 
         if (strcmp(loginAuth, "correct") == 0) {
             //show main game menu
-            displayGameMenu(controller->hangman);
+            displayGameMenu(controller);
             while(1);
         } else if (strcmp(loginAuth, "incorrect") == 0) {
             //show exit game message
