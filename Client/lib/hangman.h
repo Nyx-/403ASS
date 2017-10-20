@@ -1,8 +1,6 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-#include <stdbool.h>
-
 #include "_global.h"
 #include "controller.h"
 #include "connection.h"
@@ -10,6 +8,7 @@
 typedef struct Connection Connection;
 
 typedef struct Hangman { 
+    int status;
     char* word_a;
     char* word_b;
     int firstWordLength;
@@ -17,8 +16,6 @@ typedef struct Hangman {
     int guessesLeft;
     int guessesMade;
     char* guessedLetters;
-
-    bool notOver;
 } Hangman; 
 
 Hangman *createGame();
