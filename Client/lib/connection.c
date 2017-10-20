@@ -38,7 +38,7 @@ Connection *newConnection(char *ip, char *port) {
     
     server.sin_family = AF_INET;
     server.sin_port = htons(c->port);
-    server.sin_addr = *((struct in_addr *)he->h_addr); // OR server.sin_addr = *((struct in_addr *)he->h_addr);
+    server.sin_addr = *((struct in_addr *)he->h_addr);
     bzero(&(server.sin_zero), 8);
 
     //Connect and validate connection to remote server
