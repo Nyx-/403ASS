@@ -25,7 +25,7 @@ void exitGracefully() {
     printf("exitGraceully...\n");
     //join/gracefully handle threads
     closeConnection(controller);
-    endGame(controller->hangman);
+    endGame(h);
     freeLeaderboard(controller->leaderboard);
     exit(1);
 }
