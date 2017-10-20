@@ -6,9 +6,9 @@
 #include "connection.h"
 
 typedef struct Connection Connection;
-
-typedef struct Hangman { 
-    int status;
+typedef struct Hangman {
+    int status; 
+    char** wordPair;
     char* word_a;
     char* word_b;
     int firstWordLength;
@@ -19,17 +19,15 @@ typedef struct Hangman {
 } Hangman; 
 
 Hangman *createGame();
-void setUpGame(Hangman *h, Connection *c);
-void *playHangman(Hangman *h, Connection *c);
-void displayHangman(Hangman *h);
-void printWords(Hangman *h);
-void *getGuess(Hangman *h, Connection *c);
+void *playHangman();
+void *getGuess(Connection *c);
 int appendGuess(char *s, char c);
-void getWords(Hangman *h, Connection *c);
-void *checkGuess(Hangman *h, char letter);
-void *display(Hangman *h);
-void *displayWord(Hangman *h);
-int getWordLength(char* word);
-void endGame(Hangman *h);
+void** splitWords(char* wordPair);
+char *getWords(Connection *c);
+void printWords(char* word1, int w1_len, char* word2, int w2_len);
+
+char* receiveItems(Connection *c);
+void sendConfirm(Connection *c);
+int receiveInt(Connection *c);
 
 #endif  // HANGMAN_H

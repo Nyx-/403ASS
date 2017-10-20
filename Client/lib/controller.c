@@ -10,7 +10,7 @@ Controller *createController(char *host, char *port) {
 
     //register the connection
     c->connection = newConnection(host, port);
-    c->hangman = createGame(c->connection);
+    c->hangman = createGame();
     c->leaderboard = createLeaderboard();
 
     return c;

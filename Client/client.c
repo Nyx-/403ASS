@@ -12,8 +12,6 @@
 #include "lib/menu.h"
 
 int main(int argc, char *argv[]) {
-    Controller *controller;
-
     if (argc == 3) {
         controller = createController(argv[1], argv[2]);
     } else if (argc > 3 || argc < 2) {

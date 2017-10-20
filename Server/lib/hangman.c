@@ -12,7 +12,6 @@ void gameSetup() {
     printf("Setting up game\n");
     Hangman *h = malloc(sizeof(Hangman));
     h->status = 1; //game currently ongoing
-
     h->word_pair = (char **) selectWords();
     h->word1 = h->word_pair[0];
     h->word2 = h->word_pair[1];
@@ -29,14 +28,20 @@ void gameSetup() {
     guessTemp = h->word1_len + h->word2_len + 10;
     h->guesses = (guessTemp > 26)? 26: guessTemp;
     h->guess_letters = calloc(h->guesses + 1, sizeof(char));
+    h->guess_letters[0] = ' ';
 
     printf("Guesses %d\n", h->guesses);
 
-    //not sure if this is necessary
-    h->client_word1 = calloc(h->word1_len + 1, sizeof(char));
-    h->client_word2 = calloc(h->word1_len + 1, sizeof(char));
+    h->client_word1 = malloc(h->word1_len * sizeof(char) + 1);
+    h->client_word2 = malloc(h->word2_len * sizeof(char) + 1);
+    for (int i=0; i < h->word1_len; i++) {
+        h->client_word1[i] = ' ';
+    }
+    for (int k=0; k < h->word2_len; k++) {
+        h->client_word2[k] = ' ';
+    }
 
-    char charac1 = '0';
+    char charac1 = '_';
     char charac2 = 'a';
 
     prepareWord(h, charac1);
@@ -44,29 +49,63 @@ void gameSetup() {
     printf("client 1: %s\n", h->client_word1);
     printf("client 2: %s\n", h->client_word2);
 
-    char* sendWord1[MAXDATASIZE], sendWord2[MAXDATASIZE];
-    memset(sendWord1, 0, sizeof(sendWord1));
-    memset(sendWord2, 0, sizeof(sendWord2));
+    // char* sendWords = (char*) malloc(3 + h->word1_len + h->word2_len);
+    
 
-    strcpy(sendWord1, h->client_word1);
-    strcpy(sendWord2, h->client_word2);
+    // strcpy(sendWords, h->client_word1);
+    // strcat(sendWords, ",");
+    // strcat(sendWords, h->client_word2);
 
-    send(controller->new_fd, sendWord1, strlen(sendWord1), 0);
-    send(controller->new_fd, sendWord2, strlen(sendWord2), 0);
+    // send(controller->new_fd, sendWord1, strlen(sendWord1), 0);
+    // send(controller->new_fd, sendWord2, strlen(sendWord2), 0);
 
-    while(1) {
+    sendToClient(h->client_word1, h->client_word2, h->guess_letters, h->guesses);
+
+    while(h->status == 1) {
+        printf("Listening\n");
         listenForGuess(h);
     }
 
     
 }
 
+void sendToClient(char* word1, char* word2, char* guess_chars, int guesses) {
+    uint16_t num = htons(guesses);
+
+    //send first word
+    send(controller->new_fd, word1, (size_t) strlen(word1), 0);
+    printf("sent\n");
+    confirmRecv();
+    //send second word
+    send(controller->new_fd, word2, (size_t) strlen(word2), 0);
+    printf("sent\n");
+    confirmRecv();
+    //send letters guessed
+    send(controller->new_fd, guess_chars, (size_t) strlen(guess_chars), 0);
+    printf("sent\n");
+    confirmRecv();
+    //send guesses remaining
+    send(controller->new_fd, &num, sizeof(uint16_t), 0);
+    printf("sent\n");
+    confirmRecv();
+}
+
+void confirmRecv() {
+    int msg;
+    if(recv(controller->new_fd, &msg, sizeof(int), 0) == RETURNED_ERROR) {
+        perror("[confirmation] Error.");
+    }
+}
+
 void listenForGuess(Hangman *h) {
     char* msg[MAXDATASIZE];
+    memset(msg, 0, sizeof(msg));
     if (recv(controller->new_fd, msg, sizeof(msg), 0) == RETURNED_ERROR) {
+        perror("[listenForGuess] Error receiving character guess");
+    } else {
         //check if its a valid guess?
         printf("received a thing \n");
-        h->c_guessed = msg;
+        h->c_guessed = msg[0];
         prepareWord(h, h->c_guessed);
         //send the prepared words to the client
     }
@@ -77,9 +116,9 @@ void prepareWord(Hangman *h, char letter) {
     w1_len = h->word1_len;
     w2_len = h->word2_len;
     
-    size_t i, k;
+    int i, k;
     //if no letter was chosen AKA client hasn't guessed
-    if (letter == '0') {
+    if (letter == '_') {
         for (i = 0; i < w1_len; i++) {
             h->client_word1[i] = '_';
         }
@@ -88,6 +127,7 @@ void prepareWord(Hangman *h, char letter) {
         }
     } else {
         for (i = 0; i < w1_len; i++) {
+            
             if (h->word1[i] == letter) {
                 h->client_word1[i] = letter;
             } else {
@@ -96,6 +136,7 @@ void prepareWord(Hangman *h, char letter) {
         }
         h->client_word1[w1_len + 1] = '\0';
         for (k = 0; k < w2_len; k++) {
+            
             if (h->word2[k] == letter) {
                 h->client_word2[k] = letter;
             } else {
@@ -139,7 +180,6 @@ WordList *createWordList() {
 void loadWords() {
     FILE *file = fopen("hangman_text.txt", "r");
     const char sep1[1] = ",";
-    const char sep2[2] = "\n";
     char buffer[150];
     char *token;
     void **wordPair;
