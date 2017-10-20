@@ -51,19 +51,4 @@ int main(int argc, char *argv[]) {
         }
 
     }
-
-    
-    /* Receive message back from server */
-    // if ((numbytes = recv(controller->connection->socket, buf, MAXDATASIZE, 0)) == RETURNED_ERROR) {
-    //     perror("recv");
-    //     exit(1);
-    // }
-    
-    // buf[numbytes] = '\0';
-
-    // printf("Received: %s", buf);
-
-    // close(controller->connection->socket);
-
-    // return 0;
 }

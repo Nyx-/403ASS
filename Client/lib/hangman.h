@@ -23,7 +23,6 @@ typedef struct Hangman {
 
 Hangman *createGame();
 void *playHangman();
-void *getGuess(Connection *c);
 int appendGuess(char *s, char c);
 void** splitWords(char* wordPair);
 char *getWords(Connection *c);

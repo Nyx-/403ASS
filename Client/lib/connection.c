@@ -52,29 +52,6 @@ Connection *newConnection(char *ip, char *port) {
     return c;
 }
 
-void Receive_Array_Int_Data(int socket_identifier, int size) {
-    int number_of_bytes, i = 0;
-    uint8_t statistics;
-    char finalOutput[MAXDATASIZE] = "";
-
-    char *results = malloc(sizeof(char) * STRING_SIZE);
-
-    for (i = 0; i < size; i++) {
-        if ((number_of_bytes = recv(socket_identifier, &statistics,
-                                    sizeof(uint8_t), 0)) == RETURNED_ERROR) {
-            perror("recv");
-            exit(EXIT_FAILURE);
-        }
-        results[i] = statistics;
-    }
-    for (i = 0; i < STRING_SIZE; i++) {
-        // THIS JOINS THE STRING TOGETHER
-        strncat(finalOutput, &results[i], 1);
-    }
-
-    printf("%s\n", finalOutput);
-}
-
 void invalidConnection() {
     printf("You entered either an incorrect username or password - disconnecting\n");
     char* send[MAXDATASIZE];

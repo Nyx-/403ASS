@@ -16,27 +16,14 @@ void gameSetup() {
     h->word1 = h->word_pair[0];
     h->word2 = h->word_pair[1];
 
-    printf("Word 1 = %s\n", h->word1);
-    printf("Word 1 size = %d\n", strlen(h->word1));
-    printf("Word 2 = %s\n", h->word2);
-    printf("Word 2 size = %d\n", strlen(h->word2));
-
     h->word1_len = strlen(h->word1);
     h->word2_len = strlen(h->word2);
-
-    printf("Word 1 = %s\n", (char*) h->word_pair[0]);
-    printf("Word 2 = %s\n", (char*) h->word_pair[1]);
 
     int guessTemp = 0;
     guessTemp = h->word1_len + h->word2_len + 10;
     h->guesses = (guessTemp > 26)? 26: guessTemp;
     h->guess_letters = calloc(h->guesses + 1, sizeof(char));
     h->guess_letters[0] = ' ';
-
-    printf("Word 1 = %s\n", (char*) h->word_pair[0]);
-    printf("Word 2 = %s\n", (char*) h->word_pair[1]);
-
-    printf("Guesses %d\n", h->guesses);
 
     h->client_word1 = malloc(h->word1_len * sizeof(char) + 1);
     h->client_word2 = malloc(h->word2_len * sizeof(char) + 1);
@@ -47,22 +34,10 @@ void gameSetup() {
         h->client_word2[k] = ' ';
     }
 
-    printf("Word 1 = %s\n", (char*) h->word_pair[0]);
-    printf("Word 2 = %s\n", (char*) h->word_pair[1]);
-
     char charac1 = '_';
-    char charac2 = 'a';
 
-    // prepareWord(h, h, charac1);
     h->client_word1 = prepareWord(h, h->client_word1, h->word1, charac1);
-    printf("Word 1 = %s\n", (char*) h->word_pair[0]);
     h->client_word2 = prepareWord(h, h->client_word2, h->word2, charac1);
-    printf("Word 2 = %s\n", (char*) h->word_pair[1]);
-
-    printf("client 1: %s\n", h->client_word1);
-    printf("client 2: %s\n", h->client_word2);
-    printf("Word 1 = %s\n", (char*) h->word_pair[0]);
-    printf("Word 2 = %s\n", (char*) h->word_pair[1]);
 
     while(h->status) {
         sendToClient(h->client_word1, h->client_word2, h->guess_letters, h->guesses);
@@ -74,19 +49,13 @@ void gameSetup() {
             perror("[listenForGuess] Error receiving character guess");
             exit(1);
         }
-
-        printf("received %c \n", (char*) msg[0]);
-        printf("appending letter \n");
         appendGuess(h->guess_letters, (char*) msg[0]);
-        printf("preparing words \n");
         h->client_word1 = prepareWord(h, h->client_word1, h->word1, (char*) msg[0]);
         h->client_word2 = prepareWord(h, h->client_word2, h->word2, (char*) msg[0]);
 
-        printf("client 1: %s\n", h->client_word1);
-        printf("client 2: %s\n", h->client_word2);
-
         h->guesses = h->guesses - 1;
-        //send the prepared words to the client
+
+        //Check win condition
     }
 
     
@@ -94,22 +63,17 @@ void gameSetup() {
 
 void sendToClient(char* word1, char* word2, char* guess_chars, int guesses) {
     uint16_t num = htons(guesses);
-
     //send first word
     send(controller->new_fd, word1, strlen(word1), 0);
-    printf("sent\n");
     confirmRecv();
     //send second word
     send(controller->new_fd, word2, strlen(word2), 0);
-    printf("sent\n");
     confirmRecv();
     //send letters guessed
     send(controller->new_fd, guess_chars, strlen(guess_chars), 0);
-    printf("sent\n");
     confirmRecv();
     //send guesses remaining
     send(controller->new_fd, &num, sizeof(uint16_t), 0);
-    printf("sent\n");
     confirmRecv();
 }
 
@@ -123,8 +87,6 @@ void confirmRecv() {
 char* prepareWord(Hangman *h, char* word, char* matchWord, char letter) {
     int len;
     len = strlen(word);
-    
-    printf("%c\n", matchWord[0]);
 
     int i, k;
     //if no letter was chosen AKA client hasn't guessed
@@ -135,7 +97,6 @@ char* prepareWord(Hangman *h, char* word, char* matchWord, char letter) {
     } else {
         for (i = 0; i < len; i++) {
             if (matchWord[i] == letter) {
-                printf("correct letter\n");
                 word[i] = letter;
             }
         }
@@ -157,8 +118,6 @@ void **selectWords() {
     srand((unsigned int)time(NULL));
     srand(rand());
     num = rand() % controller->c_wordList->numWords;
-
-    printf("Word number: %d\n", num);
 
     return controller->c_wordList->words[num];
 }

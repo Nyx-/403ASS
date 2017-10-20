@@ -42,6 +42,12 @@ then in another console window, run:
 * [y]     Client exits gracefully when user selects “Quit” option from menu
 * [y]     Description of the data structure that is used for the Leader Board in your report
 
+#### Task 1 Comments
+Although the Hangman game isn't fully implemented, majority of the time you can guess letters which will update the game.
+There is a bug which occurs (which is assumed to be caused by incorrect memory allocation/clearing) which causes the number of guesses remaining, and the printed words on the client to be incorrect values.
+
+As the complete hangman game isn't fully implemented, the leaderboard is only filled with an empty "profile sheet" which would otherwise be populated with the correct data of wins/times played.
+
 ### Task 2
 Incomplete
 

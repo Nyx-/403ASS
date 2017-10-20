@@ -36,6 +36,7 @@ void *makeSelection(Controller *c) {
     if (strcmp(option, "1") == 0) {
         //PLAY HANGMAN
         send(c->connection->socket, option, sizeof(option), 0);
+        printf("\n\n");
         playHangman(c->hangman, c->connection);
     } else if (strcmp(option, "2") == 0) {
         //SHOW LEADERBOARD
