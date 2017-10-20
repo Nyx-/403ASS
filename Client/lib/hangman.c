@@ -18,39 +18,54 @@ void *playHangman() {
     Hangman *h = controller->hangman;
     Connection *c = controller->connection;
 
-    h->wordPair = (char**) splitWords(getWords(c));
-    // h->word_a = h->wordPair[0];
-    // h->word_b = h->wordPair[1];
-    printf("%s, %s\n", h->word_a, h->word_b);
+    h->word_a = receiveItems(c);
+    sendConfirm(c);
+    h->word_b = receiveItems(c);
+    sendConfirm(c);
+    h->guessedLetters = receiveItems(c);
+    sendConfirm(c);
+    h->guessesLeft = receiveInt(c);
+    sendConfirm(c);
 
     h->firstWordLength = strlen(h->word_a);
     h->secondWordLength = strlen(h->word_b);
 
-    int guessTemp = h->firstWordLength + h->secondWordLength + 10;
-    h->guessesLeft = (guessTemp > 26)? 26: guessTemp;
-
-    h->guessedLetters = calloc(h->guessesLeft + 1, sizeof(char));
-
     printf("Guessed letters: %s\n\n", h->guessedLetters);
     printf("Number of guesses left: %d\n\n", h->guessesLeft);
-
     printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
-
-    while (h->guessesLeft != 0) {
-        getGuess(c);
-        h->wordPair = (char**) splitWords(getWords(c));
-        // h->word_a = h->wordPair[0];
-        // h->word_b = h->wordPair[1];
-        printf("Guessed letters: %s\n\n", h->guessedLetters);
-        printf("Number of guesses left: %d\n\n", h->guessesLeft);
-        printWords(h->word_a, h->firstWordLength, h->word_b, h->secondWordLength);
-
-    }
-    // exit(1);
+    getGuess(c);
 }
 
+char* receiveItems(Connection *c) {
+    char* buf = (char*) malloc(sizeof(char) * MAXDATASIZE);
+    memset(buf, 0, sizeof(buf));
 
+    if (recv(c->socket, buf, sizeof(buf), 0) == RETURNED_ERROR) {
+        perror("[hangman] Error receiving char");
+    }
 
+    printf("received\n");
+
+    return buf;
+}
+
+int receiveInt(Connection *c) {
+    uint16_t buf;
+
+    if (recv(c->socket, &buf, sizeof(uint16_t), 0) == RETURNED_ERROR) {
+        perror("[hangman] Error receiving int");
+    }
+
+    return ntohs(buf);
+}
+
+void sendConfirm(Connection *c) {
+    int msg = 1;
+    if(send(c->socket, &msg, sizeof(int), 0) == RETURNED_ERROR) {
+        perror("[confirmation] Error.");
+    }
+    printf("sent\n");
+}
 
 void *getGuess(Connection *c) {
     Hangman *h = controller->hangman;
