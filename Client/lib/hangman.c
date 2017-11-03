@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <windows.h>
 #include <sys/socket.h>
+#include <stdint.h>
 
 #include "hangman.h"
 

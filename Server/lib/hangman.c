@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <stdint.h>
 
 #include "hangman.h"
 

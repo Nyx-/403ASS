@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <windows.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <pthread.h>

@@ -10,6 +10,7 @@
 #include "lib/_global.h"
 #include "lib/controller.h"
 #include "lib/menu.h"
+#include "lib/menu.c"
 
 int main(int argc, char *argv[]) {
     if (argc == 3) {
